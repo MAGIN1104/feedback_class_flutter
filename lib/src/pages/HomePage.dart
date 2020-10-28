@@ -1,6 +1,6 @@
 import 'dart:ui';
-import 'package:assets_img/src/pages/Constant.dart';
 import 'package:flutter/material.dart';
+import 'package:assets_img/src/pages/Constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,7 +9,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  //Creamos variable inicializando en 0 que nos servira para la parte de los bottomtab
   int _seleccionado = 0;
+
+  //Nos creamos una lista de opciones del menu del bottomtab
   List<Widget> _opciones = <Widget>[
     Stack(
       children: [
@@ -81,9 +85,12 @@ class _HomePageState extends State<HomePage> {
       ],
     ),
     Text('Opcion 1'),
+    Text('Opcion 2'),
+    Text('Opcion 2'),
     Text('Opcion 2')
   ];
 
+  //se crea un metodo para la seleccion de opciones
   void _selectedOption(int index) {
     setState(() {
       _seleccionado = index;
@@ -92,8 +99,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      //en el body se inicializa con un container que como hijo recibira las opciones del menu que seleccionesmos
       body: Container(child: _opciones.elementAt(_seleccionado)),
+      //el Scaffold recibe una propiedad que es el BottomNavigationBar
       bottomNavigationBar: BottomNavigationBar(
+      //definimos las opciones del menu que se requiera
+        type : BottomNavigationBarType.fixed,    //en el caso de que se tenga mas de 3 opciones utilizar este comando
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon:FaIcon(FontAwesomeIcons.university),
@@ -104,6 +115,14 @@ class _HomePageState extends State<HomePage> {
             label: 'Comunity',
           ),
           BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.userFriends),
+            label: 'Tutors',
+          ),
+           BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.userFriends),
+            label: 'Tutors',
+          ),
+           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.userFriends),
             label: 'Tutors',
           ),
