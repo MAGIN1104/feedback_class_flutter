@@ -36,17 +36,18 @@ class _SignInState extends State<SignIn> {
   //TextInput User
   Widget _user() {
     return TextField(
+      style: TextStyle(height: 0.9),
       autofocus: fState,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         labelStyle: TextStyle(color: kMoradoColor),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: kMoradoColor),
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: kMoradoColor),
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         hintText: 'ejemplo@gmail.com',
         labelText: 'Email',
@@ -61,16 +62,17 @@ class _SignInState extends State<SignIn> {
   //TextInput Password
   Widget _pass() {
     return TextField(
+      style: TextStyle(height: 0.9),
       cursorColor: Color(0xff6C63FF),
       decoration: InputDecoration(
           labelStyle: TextStyle(color: Color(0xff6C63FF)),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xff6C63FF)),
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xff6C63FF)),
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
           hintText: 'Password',
           labelText: 'Password',
@@ -107,9 +109,9 @@ class _SignInState extends State<SignIn> {
                   color: Colors.black12, offset: Offset(0, 2), blurRadius: 2.0)
             ]),
         padding:
-            EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0, bottom: 30.0),
+            EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0, bottom: 30.0),
         margin:
-            EdgeInsets.only(top: 155.0, left: 35.0, right: 35.0, bottom: 10.0),
+            EdgeInsets.only(top: 155.0, left: 25.0, right: 25.0, bottom: 10.0),
         child: ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40.0),
@@ -121,17 +123,30 @@ class _SignInState extends State<SignIn> {
                 SizedBox(height: 20.0),
                 Text('Welcome to the Comunity',
                     style: ksubtittle, textAlign: TextAlign.center),
-                kseparacion,
+                kseparacion2,
                 _user(),
                 kseparacion,
                 _pass(),
-                kseparacion,
+                kseparacion2,
                 SignInButtonWidget(
                     kcolor: kMoradoColor,
                     ktext: 'INGRESAR',
                     kstyle: ktextbtnSingIn,
-                    presionar: () {
-                     
+                    presionar: () async {
+                      //Con la base de datos
+                      final respDB2 = await DBProvider.db.getAllUser();
+                      print(respDB2);
+                      final respDB =
+                          await DBProvider.db.getUser(_username, _password);
+                      print(respDB);
+                      if (respDB == null) {
+                        showDialog(context: context, builder: (_) => _alertDialog());
+                      } else {
+                        Navigator.pushNamed(context, 'home');
+                      }
+
+                      //Practicando funcionalidades
+
                       // if (_username.isEmpty || _password.isEmpty) {
                       //   Toast.show("Complete todos los campos", context,
                       //       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -146,7 +161,7 @@ class _SignInState extends State<SignIn> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('You are now?', style: TextStyle(fontFamily: 'Lato')),
+                    Text('You are new?', style: TextStyle(fontFamily: 'Lato')),
                     FlatButton(
                       textColor: kMoradoColor,
                       onPressed: () {
@@ -180,6 +195,7 @@ class _SignInState extends State<SignIn> {
       ],
     );
   }
+
   CupertinoAlertDialog _alertDialog2(String email) {
     return CupertinoAlertDialog(
       insetAnimationCurve: Curves.elasticIn,

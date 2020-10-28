@@ -1,4 +1,5 @@
 import 'package:assets_img/src/pages/Constant.dart';
+import 'package:assets_img/src/providers/db_provider.dart';
 import 'package:assets_img/src/widgets/LogIn/button.dart';
 import 'package:assets_img/src/widgets/SignUp/headerWidget.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,10 @@ class _SignUpState extends State<SignUp> {
   Widget espacio = SizedBox(height: 20.0);
   bool vstate = true;
   bool vstate2 = true;
+  final _nameCont = TextEditingController();
+  final _emailCont = TextEditingController();
+  final _passCont = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +48,28 @@ class _SignUpState extends State<SignUp> {
                       kcolor: Color(0XFF6C63FF),
                       ktext: 'Register',
                       kstyle: ktextbtnSingIn,
-                      presionar: () {
-                        Navigator.pushNamed(context, '/');
+                      presionar: () async {
+                        print(_nameCont.text);
+                        print(_emailCont.text);
+                        print(_passCont.text);
+                        final userDB =await DBProvider.db.getUser(
+                            _emailCont.text.trim(), 
+                            _passCont.text.trim());
+                        if (userDB == null) {
+                          final respDB = await DBProvider.db.insertUser(
+                              UserModel(
+                                  name: _nameCont.text.trim(),
+                                  email: _emailCont.text.trim(),
+                                  pass: _passCont.text.trim()));
+                          print(respDB);
+                        } else {
+                          print("El email ya existe");
+                        }
+                        // Navigator.pushNamed(context, '/');
                       },
                     ),
                   ],
-              )
-            )
+                ))
           ],
         ),
         Container(
@@ -63,6 +83,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget _inputName() {
     return TextField(
+      controller: _nameCont,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         labelStyle: TextStyle(color: Color(0xff6C63FF)),
@@ -83,6 +104,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget _inputEmail() {
     return TextField(
+      controller: _emailCont,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         labelStyle: TextStyle(color: Color(0xff6C63FF)),
@@ -103,6 +125,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget _inputPass() {
     return TextField(
+      controller: _passCont,
       cursorColor: Color(0xff6C63FF),
       decoration: InputDecoration(
           labelStyle: TextStyle(color: Color(0xff6C63FF)),
@@ -133,7 +156,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-Widget _inputConfirmPass() {
+  Widget _inputConfirmPass() {
     Color kColor = Color(0xff6C63FF);
     return TextField(
       cursorColor: kColor,
@@ -159,10 +182,9 @@ Widget _inputConfirmPass() {
               });
             },
             icon: vstate2
-                    ? Icon(Icons.visibility_off, color: Color(0xff6C63FF))
-                    : Icon(Icons.visibility, color: Color(0xff6C63FF)),
-          )
-      ),
+                ? Icon(Icons.visibility_off, color: Color(0xff6C63FF))
+                : Icon(Icons.visibility, color: Color(0xff6C63FF)),
+          )),
       obscureText: vstate2,
     );
   }

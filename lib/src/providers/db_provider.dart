@@ -16,7 +16,7 @@ class DBProvider {
   //METODOS GETTER PARA OBTENER LA INFORMACION DE LA PROPIEDAD PRIVADADA _dbuser
   Future<Database> get dbusers async {
     //Si la base de datos no esta vacio retorna la base de datos.
-    if (dbusers != null) return dbusers;
+    if (_dbusers != null) return _dbusers;
     //de lo contrario no existe la base de datos
     _dbusers = await initDB();
     return _dbusers;
@@ -39,31 +39,59 @@ class DBProvider {
         version: 1,
         onOpen: (db) {}, onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE Users ('
-          ' id INTEGER PRIMARY KEY,'
-          ' nombre TEXT,'
+          ' id INTEGER PRIMARY KEY AUTOINCREMENT,'
+          ' name TEXT,'
           ' email TEXT,'
           ' pass TEXT'
           ')');
     });
   }
 
-  //REGISTRO DE USUARIOS
-  newUser(UserModel nuevoUsuario) async {
+//Isertar Usuario
+  Future<int> insertUser(UserModel user) async {
     final db = await dbusers;
-    //proceso de insercion
-    //el tojson se encarga de transformar el modelo en un mapa que se puede enviar en el insert
-    final res = await db.insert('Users', nuevoUsuario.toJson());
-    return res;
+    final resp = await db.insert('Users', user.toJson());
+    return resp;
   }
 
-  //OBTENER INFORMACION
-  Future<List<UserModel>> getUser(String correo, String password) async {
+//leer Usuario
+  Future<List<UserModel>> getAllUser() async {
     final db = await dbusers;
-    final res = await db.rawQuery(
-                  "SELECT * FROM Users WHERE email='$correo' AND pass='$password'"
-                );
-    List<UserModel> list =
-        res.isNotEmpty ? res.map((e) => UserModel.fromJson(e)).toList() : [];
-    return list;
+    final resp = await db.query('Users');
+    if (resp.isEmpty) {
+      return [];
+    } else {
+      return resp.map((json) => UserModel.fromJson(json)).toList();
+    }
   }
+
+//Obtener un usuario
+  Future<UserModel> getUser(String email, String password) async {
+    final db = await dbusers;
+    final resp = await db.query(
+        'Users',
+        where: 'email = ? AND pass = ?',
+        whereArgs: [email, password]
+    );
+    if (resp.isEmpty) {
+      return null;
+    } else {
+      return resp.map((json) => UserModel.fromJson(json)).toList().first;
+    }
+  }
+
+//Actualizar Usuario
+  // Future<int> updateUser(UserModel user) async {
+  //   final db = await dbusers;
+  //   final resp = await db.update('Users', user.toJson());
+  //   return resp;
+  // }
+
+//Borrar un usuario
+  // Future<int> deleteUser(UserModel user) async {
+  //   final db = await dbusers;
+  //   final resp = await db.delete('Users', where: 'id=?', whereArgs: [user.id]);
+  //   return resp;
+  // }
+
 }

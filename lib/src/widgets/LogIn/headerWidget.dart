@@ -1,5 +1,5 @@
-import 'package:assets_img/src/pages/Constant.dart';
 import 'package:flutter/material.dart';
+import 'package:assets_img/src/pages/Constant.dart';
 
 class Header extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class Header extends StatelessWidget {
             bottomLeft: Radius.circular(40.0),
             bottomRight: Radius.circular(40.0),
           ),
-          color: Color(0xff6C63FF),
+          color: kMoradoColor,
         ),
           ),
         Container(

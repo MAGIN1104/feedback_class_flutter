@@ -12,7 +12,8 @@ const ksubtittle =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, fontFamily: 'Lato');
 
 //Estilos
-const kseparacion = SizedBox(height: 30.0);
+const kseparacion = SizedBox(height: 10.0);
+const kseparacion2 = SizedBox(height: 30.0);
 
 //Colores
 const kblanco = Colors.white;

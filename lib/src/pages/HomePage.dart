@@ -1,4 +1,7 @@
+import 'dart:ui';
+import 'package:assets_img/src/pages/Constant.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,85 +9,168 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int numero = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-          body: Container(
+  int _seleccionado = 0;
+  List<Widget> _opciones = <Widget>[
+    Stack(
+      children: [
+        Container(
           width: double.infinity,
           height: double.infinity,
-          child: Column(
+          child: CustomPaint(
+            painter: _HeaderCurvaPainter(),
+          ),
+        ),
+        Column(
           children: [
+            Expanded(
+            child: Center(
+              child: Text(
+                'Hi, Magin',
+                style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            )),
             Container(
-              height: 450.0,
-              child: PageView(
+            height: 25.0,
+            child: Center(
+              child: Text(
+                'Courses within the community',
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Lato',
+                    color: Colors.black),
+              ),
+            )),
+            Expanded(
+              child: Row(
                 children: [
-                  imagenContainer("assets/img/guitar_one.png"),
-                  imagenContainer("assets/img/guitar_three.png"),
-                  imagenContainer("assets/img/guitar_two.png")
+                  Expanded(child: CardReusable(
+                    card: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset('assets/img/flutter.png',fit: BoxFit.cover,))
+                  )),
+                  Expanded(child: CardReusable(
+                     card: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset('assets/img/webdesign.jpg',fit: BoxFit.cover,))
+                  )),
                 ],
               ),
             ),
-            Divider(),
-            Container(
-              child: Text(
-                'Guitarra Criolla',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(child: CardReusable(
+                     card: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset('assets/img/unreal.png',fit: BoxFit.cover,))
+                  )),
+                  Expanded(child: CardReusable(
+                     card: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset('assets/img/angular.png',fit: BoxFit.cover,))
+                  )),
+                ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 20.0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              numero++;
-                            });
-                          }),
-                      Text(
-                        '$numero',
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                      IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            setState(() {
-                              numero--;
-                            });
-                          }),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: Row(
-                    children: [
-                      _starIcon(),
-                      _starIcon(),
-                      _starIcon(),
-                      _starIcon(),
-                      _halfStar(),
-                    ],
-                  ),
-                )
-              ],
-            )
           ],
         ),
+      ],
+    ),
+    Text('Opcion 1'),
+    Text('Opcion 2')
+  ];
+
+  void _selectedOption(int index) {
+    setState(() {
+      _seleccionado = index;
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(child: _opciones.elementAt(_seleccionado)),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon:FaIcon(FontAwesomeIcons.university),
+            label: 'Courses',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.addressCard),
+            label: 'Comunity',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.userFriends),
+            label: 'Tutors',
+          ),
+        ],
+        currentIndex: _seleccionado,
+        selectedItemColor: kMoradoColor,
+        onTap: _selectedOption,
       ),
     );
   }
+}
 
-Icon _halfStar() => Icon(Icons.star_border, color: Colors.yellow[700]);
-Icon _starIcon() => Icon(Icons.star, color: Colors.yellow[700]);
-Widget imagenContainer(String directorio) {
+class CardReusable extends StatelessWidget {
+  CardReusable({this.micolor, this.card});
+  final Color micolor;
+  Widget card;
+  @override
+  Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 10.0, right: 10.0),
-        child: Image.asset(directorio));
+      margin: EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+          color: Colors.grey,
+          boxShadow: [
+              BoxShadow(
+                  color: Colors.black12, offset: Offset(0, 2), blurRadius: 2.0)
+            ],
+          // color: Color(0xff1d1e33),
+          borderRadius: BorderRadius.circular(10.0)),
+      height: 200.0,
+      width: 170.0,
+      child: card,
+    );
+  }
+}
+
+class _HeaderCurvaPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+
+    //Propiedades
+    paint.color = kMoradoColor;
+    //Que tipo de relleno queremos
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 5;
+
+    final path = new Path();
+
+    //Dibujamos el path y el lapiz
+    // path.moveTo(0, size.height * 0.4);
+    // path.lineTo(size.width, size.height * 0.5);
+    // path.lineTo(size.width, 0);
+    // path.lineTo(0, 0);
+
+    //Curvas
+    path.lineTo(0, size.height * 0.30);
+    path.quadraticBezierTo(
+        size.width * 0.5, size.height * 0.20, size.width, size.height * 0.30);
+    // path.lineTo(size.width, size.height * 0.25);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

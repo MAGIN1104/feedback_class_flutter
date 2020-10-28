@@ -19,9 +19,13 @@ class UserModel {
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
         "email": email,
         "pass": pass,
     };
+
+    @override
+    String toString() {
+      return "User name $name, email $email, pass $pass";
+    }
 }
