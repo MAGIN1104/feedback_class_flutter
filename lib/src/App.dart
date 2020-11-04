@@ -1,3 +1,4 @@
+import 'package:assets_img/src/pages/DetailsWebDesign.dart';
 import 'package:assets_img/src/pages/HomePage.dart';
 import 'package:assets_img/src/pages/SignUp.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,8 @@ class MyApp extends StatelessWidget {
         '/': (BuildContext context) => SignIn(),
         'home': (BuildContext context) => HomePage(),
         'signUp': (BuildContext context) => SignUp(),
+        'detailsWD': (BuildContext context)=> DetailsWD()
       },
-
     );
   }
 }

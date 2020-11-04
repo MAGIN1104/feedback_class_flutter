@@ -140,8 +140,10 @@ class _SignInState extends State<SignIn> {
                           await DBProvider.db.getUser(_username, _password);
                       print(respDB);
                       if (respDB == null) {
-                        showDialog(context: context, builder: (_) => _alertDialog());
+                        showDialog(
+                            context: context, builder: (_) => _alertDialog());
                       } else {
+                        Navigator.of(context).pop();
                         Navigator.pushNamed(context, 'home');
                       }
 
