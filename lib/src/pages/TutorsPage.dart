@@ -1,5 +1,6 @@
-import 'package:assets_img/src/pages/Constant.dart';
 import 'package:flutter/material.dart';
+import 'package:assets_img/src/pages/Constant.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TutorsPage extends StatefulWidget {
   @override
@@ -14,11 +15,14 @@ class _TutorsPageState extends State<TutorsPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kMoradoColor,
+          shadowColor: kMoradoColor,
+          centerTitle: true,
           bottom: TabBar(
+            indicatorColor: Colors.white,
             tabs: [
-              Tab(icon: Icon(Icons.directions_car), text: 'Magin',),
-              Tab(icon: Icon(Icons.directions_transit), text:'Cristian'),
-              Tab(icon: Icon(Icons.directions_bike), text: 'Oso'),
+              Tab(icon: FaIcon(FontAwesomeIcons.userSecret),text: 'Magin',),
+              Tab(icon: FaIcon(FontAwesomeIcons.userGraduate), text:'Cristian'),
+              Tab(icon: FaIcon(FontAwesomeIcons.paw), text: 'Oso'),
             ],
           ),
           title: Text('TUTORES'),
