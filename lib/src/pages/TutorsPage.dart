@@ -29,7 +29,20 @@ class _TutorsPageState extends State<TutorsPage> {
         ),
         body: TabBarView(
           children: [
-            Icon(Icons.directions_car),
+            Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: FloatingActionButton(
+                      child:Icon(Icons.add),
+                      onPressed: (){}
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Icon(Icons.directions_transit),
             Icon(Icons.directions_bike),
           ],

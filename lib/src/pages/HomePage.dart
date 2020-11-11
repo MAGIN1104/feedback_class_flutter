@@ -1,3 +1,4 @@
+import 'package:assets_img/src/pages/ComunityPage.dart';
 import 'package:assets_img/src/pages/TutorsPage.dart';
 import 'package:assets_img/src/pages/CoursesPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     //Nos creamos una lista de opciones del menu del bottomtab
     List<Widget> _opciones = <Widget>[
       CoursesPage(),
-      Center(child: Text('COMUNIDAD')),
+      ComunityPage(),
       TutorsPage(),
     ];
 
