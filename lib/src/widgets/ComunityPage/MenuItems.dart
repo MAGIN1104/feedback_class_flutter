@@ -10,10 +10,10 @@ class MenuItem extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-              Items(
+            Items(
               text: Text('Nuevo Grupo', style: kTextItem),
+              icon: Icon(Icons.people_outline),
               // icon: FaIcon(FontAwesomeIcons.userCircle)
-              icon: Icon(Icons.people_outline, ),
             ),
             Items(
               text: Text('Nuevo chat secreto', style: kTextItem), 

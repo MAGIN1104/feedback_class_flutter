@@ -22,7 +22,11 @@ const kMoradoColor = Color(0XFF6C63FF);
 /**
  * DETALLES DE LOS CURSOS
  */
-
+const titulos = TextStyle(
+  fontFamily: 'Lato',
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold
+);
 const textoCentrado = TextAlign.justify;
 //Flutter Details
 const String flutter_body =
@@ -40,6 +44,4 @@ const String kwd_com =
 /*
 DRAWER
 */
-const kTextItem = TextStyle(
-  
-);
+const kTextItem = TextStyle();

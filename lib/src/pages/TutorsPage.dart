@@ -32,6 +32,34 @@ class _TutorsPageState extends State<TutorsPage> {
             Stack(
               children: [
                 Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Flex(
+                      direction: Axis.vertical,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            backgroundImage: AssetImage('assets/img/img_3.png'),
+                            radius: 80.0,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text('MAGIN LUNA', style: titulos),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:10.0, left: 30.0, right: 30.0),
+                          child: Text(kwd_com, textAlign: textoCentrado),
+                        ),
+                      ],
+                    ),
+                  )
+                ),
+
+                Container(
                   padding: EdgeInsets.all(10.0),
                   child: Align(
                     alignment: Alignment.bottomCenter,
@@ -43,6 +71,7 @@ class _TutorsPageState extends State<TutorsPage> {
                 ),
               ],
             ),
+
             Icon(Icons.directions_transit),
             Icon(Icons.directions_bike),
           ],
